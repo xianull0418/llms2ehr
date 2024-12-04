@@ -4,10 +4,10 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import torch
 
-# 设置模型的最大序列长度（保持与训练时一致）
+# 设置模型的最大序列长度
 max_seq_length = 1024  
 
-# 基础模型名称或路径（确保与训练时一致）
+# 基础模型名称或路径
 base_model_name = "Qwen/Qwen2-0.5B"
 
 # 加载基础模型
@@ -15,14 +15,14 @@ base_model = AutoModelForCausalLM.from_pretrained(
     base_model_name,
     device_map="auto",
     torch_dtype=torch.float16,
-    trust_remote_code=True  # 添加 trust_remote_code
+    trust_remote_code=True  
 )
 
-# 加载分词器（与训练时相同）
+# 加载分词器
 tokenizer = AutoTokenizer.from_pretrained(
     base_model_name, 
     use_fast=False, 
-    trust_remote_code=True  # 添加 trust_remote_code
+    trust_remote_code=True  
 )
 tokenizer.pad_token = tokenizer.eos_token
 
@@ -35,7 +35,7 @@ model = PeftModel.from_pretrained(
     lora_model_path,
     device_map="auto",
     torch_dtype=torch.float16,
-    trust_remote_code=True  # 添加 trust_remote_code
+    trust_remote_code=True
 )
 
 # 将模型设置为评估模式
